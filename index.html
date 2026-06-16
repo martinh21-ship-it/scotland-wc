@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0a1540">
+<title>Scotland — Road to the Round of 32</title>
+<style>
+  :root{
+    --navy:#10205a;        /* Scotland kit navy */
+    --navy2:#1a2e74;
+    --navy-deep:#0a1540;
+    --saltire:#3a78d8;     /* saltire blue */
+    --saltire-bright:#6ea8ff;
+    --thistle:#b56fc4;     /* thistle accent (brighter for contrast) */
+    --gold:#f5c518;        /* Lion Rampant gold */
+    --gold-soft:#ffd84d;
+    --paper:#f3f0e7;
+    --ink:#0a1320;
+    --muted:#9fb0d6;       /* lighter muted — readable on navy */
+    --line:rgba(255,255,255,.14);
+    --good:#4ecb86;
+    --warn:#f0c24a;
+    --bad:#f07a52;
+    --mono:"SF Mono",ui-monospace,"Cascadia Code",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{
+    -webkit-text-size-adjust:100%;
+    background:var(--navy-deep);
+    min-height:100%;
+  }
+  body{
+    font-family:"Outfit",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    background:
+      radial-gradient(1100px 500px at 80% -10%, rgba(110,168,255,.18), transparent 60%),
+      radial-gradient(900px 500px at -10% 20%, rgba(181,111,196,.12), transparent 55%),
+      var(--navy-deep);
+    background-color:var(--navy-deep);
+    color:#eaf0f8;
+    line-height:1.5;
+    min-height:100vh;
+    padding:clamp(16px,4vw,48px) clamp(14px,4vw,40px) 80px;
+  }
+  .wrap{max-width:1080px;margin:0 auto}
+
+  /* ---------- HERO / GAUGE ---------- */
+  header.hero{
+    display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(20px,4vw,48px);
+    align-items:center;margin-bottom:clamp(28px,5vw,56px);
+  }
+  @media(max-width:760px){header.hero{grid-template-columns:1fr;text-align:center}}
+  .eyebrow{
+    font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--gold);margin-bottom:14px;
+  }
+  h1{
+    font-size:clamp(30px,6vw,54px);font-weight:700;line-height:1.02;letter-spacing:-.02em;
+    margin-bottom:14px;
+  }
+  h1 .scot{
+    background:linear-gradient(100deg,var(--gold-soft),var(--gold));
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  }
+  .sub{color:#b9c6da;font-size:clamp(14px,2.4vw,16px);max-width:46ch}
+  @media(max-width:760px){.sub{margin:0 auto}}
+
+  .gauge-card{
+    background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02));
+    border:1px solid var(--line);border-radius:22px;padding:26px 24px 22px;
+    backdrop-filter:blur(8px);box-shadow:0 20px 60px -30px rgba(0,0,0,.7);
+  }
+  .gauge-wrap{position:relative;width:220px;height:220px;margin:0 auto}
+  svg.gauge{transform:rotate(-90deg);display:block}
+  .gauge-track{stroke:rgba(255,255,255,.08)}
+  .gauge-fill{stroke:url(#g);stroke-linecap:round;transition:stroke-dashoffset .9s cubic-bezier(.2,.8,.2,1)}
+  .gauge-center{
+    position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  }
+  .pct{font-size:52px;font-weight:700;letter-spacing:-.03em;line-height:1;color:var(--gold-soft)}
+  .pct span{font-size:24px;color:var(--muted)}
+  .pct-label{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:6px}
+  .verdict{text-align:center;margin-top:16px;font-size:14px;font-weight:600;letter-spacing:.01em}
+  .scenario-line{text-align:center;font-size:12.5px;color:var(--muted);margin-top:6px;min-height:1.2em}
+
+  /* status pills under hero */
+  .now{
+    display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:18px;
+  }
+  .pill{
+    font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;
+    background:rgba(255,255,255,.06);border:1px solid var(--line);
+    padding:6px 12px;border-radius:999px;color:#cdd9ea;
+  }
+  .pill b{color:#fff}
+
+  /* ---------- SECTIONS ---------- */
+  .section-head{
+    display:flex;align-items:baseline;gap:14px;margin:38px 0 16px;
+  }
+  .section-head .n{font-family:var(--mono);font-size:12px;color:var(--gold);letter-spacing:.1em}
+  .section-head h2{font-size:20px;font-weight:600;letter-spacing:-.01em}
+  .section-head .hint{margin-left:auto;font-size:12px;color:var(--muted)}
+
+  /* Group C — Scotland's own group, given prominence */
+  .groupC{
+    background:linear-gradient(155deg,rgba(245,197,24,.10),rgba(255,255,255,.02));
+    border:1px solid rgba(245,197,24,.32);border-radius:18px;padding:18px 18px 8px;margin-bottom:10px;
+  }
+  .matchgrid{display:flex;flex-direction:column;gap:9px}
+  .match{
+    display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;
+    background:rgba(255,255,255,.035);border:1px solid var(--line);border-radius:12px;
+    padding:10px 12px;
+  }
+  .match.locked{opacity:.92}
+  .match .home{text-align:right}
+  .match .away{text-align:left}
+  .team{font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .team small{display:block;font-weight:400;font-size:10.5px;color:var(--muted);font-family:var(--mono)}
+  .score{display:flex;align-items:center;gap:6px;justify-content:center}
+  .score input{
+    width:44px;height:40px;text-align:center;font-family:var(--mono);font-size:18px;font-weight:700;
+    background:#0a1540;border:1.5px solid rgba(245,197,24,.45);border-radius:9px;color:var(--gold-soft);
+    -moz-appearance:textfield;
+  }
+  .score input::-webkit-outer-spin-button,.score input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+  .score input::placeholder{color:rgba(255,255,255,.25)}
+  .score input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(245,197,24,.3)}
+  .score input:disabled{background:#0a1540;border-color:rgba(245,197,24,.7);color:var(--gold);opacity:1;cursor:default;font-weight:800}
+  .vs{font-family:var(--mono);font-size:12px;color:var(--gold)}
+  .flag{font-size:15px;line-height:1;vertical-align:-1px}
+  .flagimg{width:19px;height:11px;vertical-align:-1px;border-radius:2px;
+    box-shadow:0 0 0 1px rgba(255,255,255,.18);display:inline-block}
+  .scotrow{color:#fff}
+  .scotrow .team{color:var(--gold-soft)}
+
+  /* other groups: compact accordion grid */
+  .groups{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:12px}
+  .gcard{
+    background:rgba(255,255,255,.035);border:1px solid var(--line);border-radius:14px;overflow:hidden;
+  }
+  .gcard > summary{
+    list-style:none;cursor:pointer;padding:13px 15px;display:flex;align-items:center;gap:10px;
+    font-weight:600;font-size:14px;user-select:none;
+  }
+  .gcard > summary::-webkit-details-marker{display:none}
+  .gcard .tag{font-family:var(--mono);font-size:11px;color:var(--gold);
+    border:1px solid var(--line);border-radius:6px;padding:2px 7px}
+  .gcard .gstat{margin-left:auto;font-size:11.5px;color:var(--muted);font-family:var(--mono)}
+  .gcard .chev{transition:transform .25s;color:var(--muted)}
+  .gcard[open] .chev{transform:rotate(90deg)}
+  .gcard .body{padding:4px 13px 13px}
+  .gcard .body .match{background:rgba(0,0,0,.18)}
+  .gcard .body .match .team{font-size:13px}
+  .gcard .body .match .score input{width:38px;height:34px;font-size:16px}
+
+  /* mini table preview inside group */
+  .ttable{width:100%;border-collapse:collapse;margin-top:10px;font-size:12px}
+  .ttable th{font-family:var(--mono);font-weight:400;color:var(--muted);text-align:right;padding:3px 6px;font-size:10.5px;text-transform:uppercase;letter-spacing:.06em}
+  .ttable th:first-child{text-align:left}
+  .ttable td{padding:4px 6px;text-align:right;border-top:1px solid rgba(255,255,255,.05)}
+  .ttable td:first-child{text-align:left;font-weight:600}
+  .ttable tr.q td{color:#8fe6b4}
+  .ttable tr.q3 td{color:#f5d98a}
+  .ttable .pos{color:var(--muted);font-family:var(--mono);width:18px}
+
+  /* third place board */
+  .board{background:rgba(0,0,0,.2);border:1px solid var(--line);border-radius:14px;padding:6px 6px 10px;margin-top:6px}
+  .board table{width:100%;border-collapse:collapse;font-size:13px}
+  .board th{font-family:var(--mono);font-weight:400;font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);padding:9px 10px;text-align:right}
+  .board th:first-child,.board th:nth-child(2){text-align:left}
+  .board td{padding:9px 10px;text-align:right;border-top:1px solid rgba(255,255,255,.06)}
+  .board td:nth-child(2){text-align:left;font-weight:600}
+  .board tr.cut td{border-top:2px solid var(--thistle)}
+  .board tr.in td{background:rgba(78,203,134,.10)}
+  .board tr.out{opacity:.72}
+  .board tr.scot td{background:rgba(245,197,24,.16)}
+  .board tr.scot td:nth-child(2){color:var(--gold-soft)}
+  .board .rk{color:var(--muted);font-family:var(--mono)}
+  .cutlabel{font-family:var(--mono);font-size:11px;color:var(--thistle);text-align:center;padding:6px;letter-spacing:.08em}
+
+  /* controls */
+  .controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:14px 0 4px}
+  button.btn{
+    font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;
+    background:rgba(255,255,255,.06);border:1px solid var(--line);color:#dfe8f5;
+    padding:9px 15px;border-radius:10px;transition:.15s;
+  }
+  button.btn:hover{background:rgba(255,255,255,.12);border-color:var(--saltire)}
+  button.btn.primary{background:var(--saltire);border-color:var(--saltire);color:#fff}
+  button.btn.primary:hover{background:var(--saltire-bright)}
+  .runinfo{font-size:12px;color:var(--muted);font-family:var(--mono)}
+  .autowrap{display:inline-flex;align-items:center;gap:7px;font-size:13px;color:#dfe8f5;cursor:pointer;user-select:none}
+  .autowrap input{width:16px;height:16px;accent-color:var(--saltire)}
+  .feedbar{display:flex;align-items:center;gap:9px;margin:10px 0 0;font-size:12.5px;
+    font-family:var(--mono);color:var(--muted)}
+  .feedbar .dot{width:9px;height:9px;border-radius:50%;background:var(--muted);flex:none;
+    box-shadow:0 0 0 0 rgba(0,0,0,0)}
+  .feedbar .dot.ok{background:var(--good);box-shadow:0 0 10px var(--good)}
+  .feedbar .dot.live{background:var(--bad);animation:pulse 1.4s infinite}
+  .feedbar .dot.err{background:var(--warn)}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(210,96,63,.5)}70%{box-shadow:0 0 0 8px rgba(210,96,63,0)}100%{box-shadow:0 0 0 0 rgba(210,96,63,0)}}
+
+  footer{margin-top:40px;color:var(--muted);font-size:12px;line-height:1.7;border-top:1px solid var(--line);padding-top:18px}
+  footer b{color:#cdd9ea}
+  a{color:var(--saltire-bright)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div>
+      <div class="eyebrow">FIFA World Cup 2026 · Group C</div>
+      <h1>Can <span class="scot">Scotland</span> reach the Round of 32?</h1>
+      <p class="sub">Live qualification odds from a Monte Carlo simulation of every remaining match. Enter real scores as games finish — the probability updates instantly.</p>
+      <div class="now" id="nowPills"></div>
+    </div>
+
+    <div class="gauge-card">
+      <div class="gauge-wrap">
+        <svg class="gauge" width="220" height="220" viewBox="0 0 220 220">
+          <defs>
+            <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#f5c518"/>
+              <stop offset="1" stop-color="#6ea8ff"/>
+            </linearGradient>
+          </defs>
+          <circle class="gauge-track" cx="110" cy="110" r="92" fill="none" stroke-width="18"/>
+          <circle class="gauge-fill" id="gaugeFill" cx="110" cy="110" r="92" fill="none" stroke-width="18"
+                  stroke-dasharray="578.05" stroke-dashoffset="578.05"/>
+        </svg>
+        <div class="gauge-center">
+          <div class="pct" id="pctVal">—<span>%</span></div>
+          <div class="pct-label">qualify</div>
+        </div>
+      </div>
+      <div class="verdict" id="verdict">Run the simulation</div>
+      <div class="scenario-line" id="scenarioLine"></div>
+    </div>
+  </header>
+
+  <div class="controls">
+    <button class="btn primary" id="runBtn">Run simulation</button>
+    <button class="btn" id="syncBtn">Sync live results</button>
+    <label class="autowrap"><input type="checkbox" id="autoChk"> <span>Auto-refresh</span></label>
+    <button class="btn" id="resetBtn">Reset to today</button>
+    <span class="runinfo" id="runInfo"></span>
+  </div>
+  <div class="feedbar" id="feedbar">
+    <span class="dot" id="feedDot"></span>
+    <span id="feedMsg">Live feed not configured — set FEED_URL to your API endpoint.</span>
+  </div>
+
+  <!-- GROUP C -->
+  <div class="section-head">
+    <span class="n">C</span><h2>Scotland's group</h2>
+    <span class="hint">Played games are locked · edit the rest</span>
+  </div>
+  <div class="groupC">
+    <div class="matchgrid" id="groupC_matches"></div>
+    <table class="ttable" id="groupC_table"></table>
+  </div>
+
+  <!-- THIRD PLACE BOARD -->
+  <div class="section-head">
+    <span class="n">★</span><h2>Best third-place race</h2>
+    <span class="hint">Top 8 of 12 advance</span>
+  </div>
+  <div class="board" id="thirdBoard"></div>
+
+  <!-- OTHER GROUPS -->
+  <div class="section-head">
+    <span class="n">A–L</span><h2>All other groups</h2>
+    <span class="hint">Tap to expand &amp; enter scores</span>
+  </div>
+  <div class="groups" id="otherGroups"></div>
+
+  <footer>
+    <p><b>How it works.</b> Each press of <b>Run simulation</b> plays out every unplayed match 20,000 times using team-strength estimates, then ranks the twelve third-place teams exactly as FIFA does (points → goal difference → goals scored). The gauge shows how often Scotland land in the top eight. Lock in real scores as they happen and the unplayed games shrink, so the number gets sharper as the tournament goes on.</p>
+    <p style="margin-top:8px"><b>Reading it.</b> If Scotland finish 1st or 2nd in Group C they qualify outright (counted as 100%). Otherwise it's the third-place race, where the margin of any defeat matters enormously. Strength ratings are approximate — treat the figure as a well-grounded estimate, not a precise probability.</p>
+  </footer>
+
+</div>
+
+<script>
+// ---- Visible error catcher: if anything throws, show it on screen ----
+window.onerror=function(msg,src,line,col){
+  try{
+    var b=document.createElement('div');
+    b.style.cssText='margin:16px;padding:14px;border:1px solid #f0c24a;border-radius:12px;'
+      +'background:rgba(240,194,74,.12);color:#ffd84d;font:13px/1.5 monospace;white-space:pre-wrap';
+    b.textContent='Script error (please screenshot):\n'+msg+'\nline '+line+':'+col;
+    document.body.insertBefore(b,document.body.firstChild);
+  }catch(e){}
+  return false;
+};
+/* ============================================================
+   DATA MODEL
+   Each group: teams[{code,name,rank}], matches[{h,a,hs,as,played}]
+   Strength ~ Elo-ish, used only for unplayed games.
+   ============================================================ */
+const TEAMS = {
+  // A
+  MEX:{n:"Mexico",iso:"MX",s:1610}, KOR:{n:"South Korea",iso:"KR",s:1560}, RSA:{n:"South Africa",iso:"ZA",s:1440}, CZE:{n:"Czechia",iso:"CZ",s:1520},
+  // B
+  CAN:{n:"Canada",iso:"CA",s:1540}, BIH:{n:"Bosnia & Herz.",iso:"BA",s:1500}, QAT:{n:"Qatar",iso:"QA",s:1460}, SUI:{n:"Switzerland",iso:"CH",s:1640},
+  // C
+  SCO:{n:"Scotland",iso:"@SCO",s:1570}, BRA:{n:"Brazil",iso:"BR",s:1930}, MAR:{n:"Morocco",iso:"MA",s:1780}, HAI:{n:"Haiti",iso:"HT",s:1320},
+  // D
+  USA:{n:"United States",iso:"US",s:1640}, AUS:{n:"Australia",iso:"AU",s:1530}, TUR:{n:"Turkey",iso:"TR",s:1640}, PAR:{n:"Paraguay",iso:"PY",s:1520},
+  // E
+  GER:{n:"Germany",iso:"DE",s:1820}, CIV:{n:"Ivory Coast",iso:"CI",s:1510}, ECU:{n:"Ecuador",iso:"EC",s:1620}, CUR:{n:"Curacao",iso:"CW",s:1360},
+  // F
+  SWE:{n:"Sweden",iso:"SE",s:1600}, NED:{n:"Netherlands",iso:"NL",s:1820}, JPN:{n:"Japan",iso:"JP",s:1640}, TUN:{n:"Tunisia",iso:"TN",s:1500},
+  // G
+  BEL:{n:"Belgium",iso:"BE",s:1800}, IRN:{n:"Iran",iso:"IR",s:1530}, EGY:{n:"Egypt",iso:"EG",s:1540}, NZL:{n:"New Zealand",iso:"NZ",s:1370},
+  // H
+  ESP:{n:"Spain",iso:"ES",s:1930}, URU:{n:"Uruguay",iso:"UY",s:1760}, KSA:{n:"Saudi Arabia",iso:"SA",s:1450}, CPV:{n:"Cape Verde",iso:"CV",s:1420},
+  // I
+  FRA:{n:"France",iso:"FR",s:1940}, SEN:{n:"Senegal",iso:"SN",s:1720}, NOR:{n:"Norway",iso:"NO",s:1700}, IRQ:{n:"Iraq",iso:"IQ",s:1440},
+  // J
+  ARG:{n:"Argentina",iso:"AR",s:1900}, AUT:{n:"Austria",iso:"AT",s:1640}, ALG:{n:"Algeria",iso:"DZ",s:1600}, JOR:{n:"Jordan",iso:"JO",s:1470},
+  // K
+  POR:{n:"Portugal",iso:"PT",s:1840}, COL:{n:"Colombia",iso:"CO",s:1740}, UZB:{n:"Uzbekistan",iso:"UZ",s:1490}, COD:{n:"DR Congo",iso:"CD",s:1480},
+  // L
+  ENG:{n:"England",iso:"@ENG",s:1850}, CRO:{n:"Croatia",iso:"HR",s:1740}, PAN:{n:"Panama",iso:"PA",s:1450}, GHA:{n:"Ghana",iso:"GH",s:1540},
+};
+
+// Round-robin order for a group of 4: (1v2,3v4)(1v3,2v4)(1v4,2v3) - standard
+function rr(t){ // t = [a,b,c,d]
+  const [a,b,c,d]=t;
+  return [[a,b],[c,d],[a,c],[d,b],[a,d],[b,c]]; // matchday 1,1,2,2,3,3
+}
+
+// Build default groups. Played games carry real scores (June 11-14, MD1).
+function blankMatches(order){return order.map(([h,a])=>({h,a,hs:"",as:"",played:false}));}
+
+function makeGroup(id,t,results){
+  const order=rr(t);
+  const ms=blankMatches(order);
+  if(results){for(const r of results){
+    const m=ms.find(m=>(m.h===r.h&&m.a===r.a)||(m.h===r.a&&m.a===r.h));
+    if(m){ if(m.h===r.h){m.hs=r.hs;m.as=r.as;} else {m.hs=r.as;m.as=r.hs;} m.played=true; }
+  }}
+  return {id,teams:t,matches:ms};
+}
+
+// Default state = reality as of 16 June 2026
+function defaultGroups(){
+ return [
+  makeGroup("A",["MEX","KOR","RSA","CZE"],[
+    {h:"MEX",a:"RSA",hs:2,as:0},{h:"KOR",a:"CZE",hs:2,as:1}]),
+  makeGroup("B",["CAN","BIH","QAT","SUI"],[
+    {h:"CAN",a:"BIH",hs:1,as:1},{h:"QAT",a:"SUI",hs:1,as:1}]),
+  makeGroup("C",["SCO","BRA","MAR","HAI"],[
+    {h:"SCO",a:"HAI",hs:1,as:0},{h:"BRA",a:"MAR",hs:1,as:1}]),
+  makeGroup("D",["USA","AUS","TUR","PAR"],[
+    {h:"USA",a:"PAR",hs:4,as:1},{h:"AUS",a:"TUR",hs:2,as:0}]),
+  makeGroup("E",["GER","CIV","ECU","CUR"],[
+    {h:"GER",a:"CUR",hs:7,as:1},{h:"CIV",a:"ECU",hs:1,as:0}]),
+  makeGroup("F",["SWE","NED","JPN","TUN"],[
+    {h:"SWE",a:"TUN",hs:5,as:1},{h:"NED",a:"JPN",hs:2,as:2}]),
+  makeGroup("G",["BEL","IRN","EGY","NZL"]),
+  makeGroup("H",["ESP","URU","KSA","CPV"]),
+  makeGroup("I",["FRA","SEN","NOR","IRQ"]),
+  makeGroup("J",["ARG","AUT","ALG","JOR"]),
+  makeGroup("K",["POR","COL","UZB","COD"]),
+  makeGroup("L",["ENG","CRO","PAN","GHA"]),
+ ];
+}
+
+/* ---------- persistence (in-memory only; no browser storage) ---------- */
+let SAVED=null;
+function save(){ SAVED=JSON.stringify(GROUPS); }
+function load(){ try{return SAVED?JSON.parse(SAVED):null;}catch(e){return null;} }
+
+let GROUPS = load() || defaultGroups();
+
+/* ============================================================
+   SIMULATION
+   ============================================================ */
+function poisson(l){let L=Math.exp(-l),k=0,p=1;do{k++;p*=Math.random();}while(p>L);return k-1;}
+function simScore(h,a){
+  const d=(TEAMS[h].s-TEAMS[a].s)/100;
+  const eh=Math.max(.18,1.35+0.34*d), ea=Math.max(.18,1.35-0.34*d);
+  return [poisson(eh),poisson(ea)];
+}
+// table for a group given concrete results (array of {h,a,hs,as})
+function tableOf(teams,matches){
+  const r={}; teams.forEach(t=>r[t]={t,pts:0,gf:0,ga:0});
+  for(const m of matches){
+    const hs=+m.hs, as=+m.as;
+    r[m.h].gf+=hs; r[m.h].ga+=as; r[m.a].gf+=as; r[m.a].ga+=hs;
+    if(hs>as)r[m.h].pts+=3; else if(as>hs)r[m.a].pts+=3; else {r[m.h].pts++;r[m.a].pts++;}
+  }
+  return Object.values(r).map(x=>({...x,gd:x.gf-x.ga}))
+    .sort((A,B)=>B.pts-A.pts||B.gd-A.gd||B.gf-A.gf||TEAMS[B.t].s-TEAMS[A.t].s);
+}
+// one simulated completion of all groups -> returns {scotPlace, scotRow, thirds[]}
+function simOnce(){
+  const thirds=[]; let scotPlace=99, scotRow=null;
+  for(const g of GROUPS){
+    const ms=g.matches.map(m=>{
+      if(m.played && m.hs!=="" && m.as!=="") return {h:m.h,a:m.a,hs:+m.hs,as:+m.as};
+      if(!m.played && m.hs!=="" && m.as!=="") return {h:m.h,a:m.a,hs:+m.hs,as:+m.as}; // user-entered future
+      const [hs,as]=simScore(m.h,m.a); return {h:m.h,a:m.a,hs,as};
+    });
+    const tbl=tableOf(g.teams,ms);
+    if(g.id==="C"){
+      const idx=tbl.findIndex(x=>x.t==="SCO");
+      scotPlace=idx+1; scotRow=tbl[idx];
+    }
+    thirds.push({g:g.id, ...tbl[2]});
+  }
+  return {scotPlace,scotRow,thirds};
+}
+function runSim(iter=20000){
+  let qualify=0, top2=0, viaThird=0;
+  let sumGD=0, place3=0;
+  for(let i=0;i<iter;i++){
+    const {scotPlace,scotRow,thirds}=simOnce();
+    if(scotPlace<=2){ qualify++; top2++; continue; }
+    if(scotPlace===3){
+      place3++; sumGD+=scotRow.gd;
+      thirds.sort((A,B)=>B.pts-A.pts||B.gd-A.gd||B.gf-A.gf||TEAMS[B.t].s-TEAMS[A.t].s);
+      const rank=thirds.findIndex(x=>x.g==="C")+1;
+      if(rank<=8){ qualify++; viaThird++; }
+    }
+  }
+  return {
+    p:qualify/iter, top2:top2/iter, viaThird:viaThird/iter,
+    p3:place3/iter, avgGD: place3? sumGD/place3 : 0, iter
+  };
+}
+
+/* ============================================================
+   RENDER
+   ============================================================ */
+const $=s=>document.querySelector(s);
+
+// Safe flag renderer. Source stays pure ASCII (no emoji literals that can
+// corrupt on download). National flags are built at runtime from the ISO code
+// via regional-indicator code points; Scotland/England use inline SVG because
+// iOS Safari mishandles their subdivision-flag emoji. Never throws.
+function flag(code){
+  try{
+    var t=TEAMS[code]; if(!t) return "";
+    var iso=t.iso;
+    if(iso==="@SCO") return '<svg class="flagimg" viewBox="0 0 20 12" aria-label="Scotland"><rect width="20" height="12" fill="#005eb8"/><path d="M0 0 L20 12 M20 0 L0 12" stroke="#fff" stroke-width="2.2"/></svg>';
+    if(iso==="@ENG") return '<svg class="flagimg" viewBox="0 0 20 12" aria-label="England"><rect width="20" height="12" fill="#fff"/><path d="M10 0 V12 M0 6 H20" stroke="#ce1124" stroke-width="2.4"/></svg>';
+    if(iso && iso.length===2){
+      var A=0x1F1E6, a="A".charCodeAt(0);
+      var e=String.fromCodePoint(A+iso.charCodeAt(0)-a, A+iso.charCodeAt(1)-a);
+      return '<span class="flag">'+e+'</span>';
+    }
+    return "";
+  }catch(e){ return ""; }
+}
+
+function matchRow(g,mi,compact){
+  const m=g.matches[mi];
+  const locked=m.played;
+  const scot = m.h==="SCO"||m.a==="SCO";
+  const dis=locked?"disabled":"";
+  return `<div class="match ${locked?'locked':''} ${scot&&g.id==='C'?'scotrow':''}" data-g="${g.id}" data-m="${mi}">
+    <div class="home"><div class="team">${TEAMS[m.h].n} ${flag(m.h)}<small>${m.h}</small></div></div>
+    <div class="score">
+      <input type="number" min="0" max="20" value="${m.hs}" ${dis} data-side="h" inputmode="numeric">
+      <span class="vs">-</span>
+      <input type="number" min="0" max="20" value="${m.as}" ${dis} data-side="a" inputmode="numeric">
+    </div>
+    <div class="away"><div class="team">${flag(m.a)} ${TEAMS[m.a].n}<small>${m.a}</small></div></div>
+  </div>`;
+}
+
+function groupTablePreview(g){
+  // current deterministic table from entered scores only
+  const ms=g.matches.filter(m=>m.hs!==""&&m.as!=="").map(m=>({h:m.h,a:m.a,hs:+m.hs,as:+m.as}));
+  const tbl=tableOf(g.teams,ms);
+  let rows=tbl.map((r,i)=>{
+    const cls=i<2?"q":(i===2?"q3":"");
+    return `<tr class="${cls}"><td class="pos">${i+1}</td><td>${flag(r.t)} ${TEAMS[r.t].n}</td>
+      <td>${r.pts}</td><td>${r.gd>0?'+':''}${r.gd}</td><td>${r.gf}</td></tr>`;
+  }).join("");
+  return `<thead><tr><th></th><th>Team</th><th>Pts</th><th>GD</th><th>GF</th></tr></thead><tbody>${rows}</tbody>`;
+}
+
+function render(){
+  // Group C
+  const gc=GROUPS.find(g=>g.id==="C");
+  $("#groupC_matches").innerHTML=gc.matches.map((m,i)=>matchRow(gc,i)).join("");
+  $("#groupC_table").innerHTML=groupTablePreview(gc);
+
+  // other groups
+  const others=GROUPS.filter(g=>g.id!=="C");
+  $("#otherGroups").innerHTML=others.map(g=>{
+    const played=g.matches.filter(m=>m.hs!==""&&m.as!=="").length;
+    return `<details class="gcard" ${played<g.matches.length&&played>0?'':''}>
+      <summary><span class="tag">${g.id}</span>
+        ${g.teams.map(t=>TEAMS[t].n.split(" ")[0]).slice(0,2).join("  \u00b7  ")}...
+        <span class="gstat">${played}/6 played</span>
+        <span class="chev">\u25b8</span>
+      </summary>
+      <div class="body">
+        <div class="matchgrid">${g.matches.map((m,i)=>matchRow(g,i,true)).join("")}</div>
+        <table class="ttable">${groupTablePreview(g)}</table>
+      </div>
+    </details>`;
+  }).join("");
+
+  bindInputs();
+  renderNow();
+}
+
+function renderNow(){
+  const gc=GROUPS.find(g=>g.id==="C");
+  const ms=gc.matches.filter(m=>m.hs!==""&&m.as!=="").map(m=>({h:m.h,a:m.a,hs:+m.hs,as:+m.as}));
+  const tbl=tableOf(gc.teams,ms);
+  const s=tbl.find(r=>r.t==="SCO");
+  const pos=tbl.findIndex(r=>r.t==="SCO")+1;
+  const totalPlayed=GROUPS.reduce((n,g)=>n+g.matches.filter(m=>m.hs!==""&&m.as!=="").length,0);
+  $("#nowPills").innerHTML=`
+    <span class="pill">Scotland: <b>${s.pts} pts</b></span>
+    <span class="pill">GD <b>${s.gd>0?'+':''}${s.gd}</b></span>
+    <span class="pill">Group C: <b>${pos===1?'1st':pos===2?'2nd':pos===3?'3rd':'4th'}</b></span>
+    <span class="pill"><b>${totalPlayed}</b>/72 games in</span>`;
+}
+
+function bindInputs(){
+  document.querySelectorAll('.match input').forEach(inp=>{
+    inp.addEventListener('input',e=>{
+      const row=e.target.closest('.match');
+      const gid=row.dataset.g, mi=+row.dataset.m, side=e.target.dataset.side;
+      const g=GROUPS.find(x=>x.id===gid);
+      let v=e.target.value;
+      if(v!=="") v=Math.max(0,Math.min(20,parseInt(v)||0));
+      g.matches[mi][side==='h'?'hs':'as']=v;
+      // live-update the little tables + now pills (cheap), defer sim to button
+      $("#groupC_table").innerHTML=groupTablePreview(GROUPS.find(g=>g.id==="C"));
+      renderNow();
+      save();
+    });
+  });
+}
+
+function thirdBoardFromSnapshot(){
+  // deterministic third-place board using ONLY entered scores (preview)
+  const thirds=GROUPS.map(g=>{
+    const ms=g.matches.filter(m=>m.hs!==""&&m.as!=="").map(m=>({h:m.h,a:m.a,hs:+m.hs,as:+m.as}));
+    const tbl=tableOf(g.teams,ms);
+    const complete=g.matches.every(m=>m.hs!==""&&m.as!=="");
+    return {g:g.id, complete, ...tbl[2]};
+  });
+  thirds.sort((A,B)=>B.pts-A.pts||B.gd-A.gd||B.gf-A.gf||TEAMS[B.t].s-TEAMS[A.t].s);
+  let rows=thirds.map((r,i)=>{
+    const cut=i===8?'cut':'';
+    const inout=i<8?'in':'out';
+    const scot=r.t==="SCO"?'scot':'';
+    return `<tr class="${inout} ${cut} ${scot}">
+      <td class="rk">${i+1}</td><td>${flag(r.t)} ${TEAMS[r.t].n} <span class="rk">${r.g}</span></td>
+      <td>${r.pts}</td><td>${r.gd>0?'+':''}${r.gd}</td><td>${r.gf}</td>
+      <td>${r.complete?'\u2713':' \u00b7 '}</td></tr>`;
+  }).join("");
+  $("#thirdBoard").innerHTML=`<table>
+    <thead><tr><th>#</th><th>Third-place team</th><th>Pts</th><th>GD</th><th>GF</th><th>Final</th></tr></thead>
+    <tbody>${rows}</tbody></table>
+    <div class="cutlabel">- teams above this line (top 8) advance -</div>`;
+  // move cut label visually: simplest is the border on row 9 (cut class)
+}
+
+/* ---------- gauge + verdict ---------- */
+function setGauge(p){
+  const C=2*Math.PI*92;
+  $("#gaugeFill").style.strokeDashoffset = C*(1-p);
+  $("#pctVal").innerHTML = Math.round(p*100)+'<span>%</span>';
+  const v=$("#verdict"), sc=$("#scenarioLine");
+  let label,color;
+  if(p>=.85){label="Very likely through";color="var(--good)";}
+  else if(p>=.6){label="Favourites to advance";color="var(--good)";}
+  else if(p>=.45){label="A genuine coin-flip";color="var(--warn)";}
+  else if(p>=.25){label="Up against it";color="var(--warn)";}
+  else {label="Long shot";color="var(--bad)";}
+  v.textContent=label; v.style.color=color;
+}
+
+function run(){
+  $("#runBtn").textContent="Simulating...";
+  setTimeout(()=>{
+    const t0=performance.now();
+    const r=runSim(20000);
+    const t1=performance.now();
+    setGauge(r.p);
+    thirdBoardFromSnapshot();
+    const scen = r.top2>0
+      ? `Top-2 finish in ${Math.round(r.top2*100)}% of runs  \u00b7  third-place route adds ${Math.round(r.viaThird*100)}%`
+      : `Third place in ${Math.round(r.p3*100)}% of runs  \u00b7  avg GD ${r.avgGD>0?'+':''}${r.avgGD.toFixed(1)}`;
+    $("#scenarioLine").textContent=scen;
+    $("#runInfo").textContent=`${r.iter.toLocaleString()} simulations  \u00b7  ${(t1-t0|0)}ms`;
+    $("#runBtn").textContent="Run simulation";
+  },30);
+}
+
+$("#runBtn").addEventListener('click',run);
+$("#resetBtn").addEventListener('click',()=>{
+  GROUPS=defaultGroups(); save(); render(); thirdBoardFromSnapshot();
+  setGauge(0); $("#pctVal").innerHTML='-<span>%</span>'; $("#verdict").textContent="Run the simulation";
+  $("#scenarioLine").textContent=""; $("#runInfo").textContent="";
+});
+
+/* ============================================================
+   LIVE FEED
+   ------------------------------------------------------------
+   Point FEED_URL at your API. It must return JSON in this shape
+   (CORS must be enabled on the endpoint):
+
+   {
+     "updated": "2026-06-19T21:00:00Z",
+     "matches": [
+       { "group":"C", "home":"SCO", "away":"HAI", "hs":1, "as":0, "status":"finished" },
+       { "group":"C", "home":"SCO", "away":"MAR", "hs":null, "as":null, "status":"scheduled" }
+     ]
+   }
+
+   - group:  "A".."L"
+   - home/away: the 3-letter codes used in TEAMS (SCO, BRA, MAR, ...)
+   - status: "finished" | "live" | "scheduled"
+   - hs/as: integers when known, null otherwise
+   Only "finished" matches are locked in; "live"/"scheduled" are simulated.
+   ============================================================ */
+const FEED_URL = "";          // <-- set to e.g. "https://your-worker.workers.dev/results"
+const POLL_SECONDS = 60;      // how often Auto-refresh polls
+
+let pollTimer=null;
+
+function setFeed(state,msg){
+  const dot=$("#feedDot");
+  dot.className="dot"+(state?(" "+state):"");
+  $("#feedMsg").textContent=msg;
+}
+
+// merge incoming matches into GROUPS; returns {applied, live, changed}
+function applyFeed(data){
+  let applied=0, live=0, changed=false;
+  if(!data||!Array.isArray(data.matches)) throw new Error("bad payload");
+  for(const fx of data.matches){
+    const g=GROUPS.find(x=>x.id===fx.group);
+    if(!g) continue;
+    const m=g.matches.find(m=>(m.h===fx.home&&m.a===fx.away)||(m.h===fx.away&&m.a===fx.home));
+    if(!m) continue;
+    const finished = fx.status==="finished" && fx.hs!=null && fx.as!=null;
+    if(fx.status==="live") live++;
+    if(!finished) continue;
+    // orient scores to our home/away
+    let hs=fx.hs, as=fx.as;
+    if(m.h!==fx.home){ const t=hs; hs=as; as=t; }
+    if(String(m.hs)!==String(hs)||String(m.as)!==String(as)||!m.played) changed=true;
+    m.hs=hs; m.as=as; m.played=true;
+    applied++;
+  }
+  if(changed) save();
+  return {applied,live,changed,updated:data.updated};
+}
+
+async function sync(auto){
+  if(!FEED_URL){ setFeed("err","Live feed not configured - set FEED_URL in the file to your API endpoint."); return; }
+  setFeed("","Fetching live results...");
+  try{
+    const res=await fetch(FEED_URL,{cache:"no-store"});
+    if(!res.ok) throw new Error("HTTP "+res.status);
+    const data=await res.json();
+    const r=applyFeed(data);
+    render(); thirdBoardFromSnapshot();
+    if(r.changed || !auto) run();          // re-simulate when something changed (or on manual sync)
+    const when=r.updated?new Date(r.updated).toLocaleString():new Date().toLocaleTimeString();
+    if(r.live>0) setFeed("live",`${r.live} match(es) live  \u00b7  ${r.applied} finished applied  \u00b7  updated ${when}`);
+    else setFeed("ok",`${r.applied} finished results applied  \u00b7  updated ${when}`);
+  }catch(err){
+    setFeed("err","Feed error: "+err.message+" (check FEED_URL, CORS, and JSON shape)");
+  }
+}
+
+$("#syncBtn").addEventListener('click',()=>sync(false));
+$("#autoChk").addEventListener('change',e=>{
+  if(e.target.checked){
+    sync(true);
+    pollTimer=setInterval(()=>sync(true),POLL_SECONDS*1000);
+    if(!FEED_URL) e.target.checked=false;
+  }else{
+    clearInterval(pollTimer); pollTimer=null;
+  }
+});
+
+// initialise feed status line
+if(FEED_URL) setFeed("","Live feed ready - press Sync or enable Auto-refresh.");
+
+try{
+  render();
+  thirdBoardFromSnapshot();
+  run(); // auto-run on load
+}catch(err){
+  // Never leave a blank page: show what went wrong.
+  const box=document.createElement('div');
+  box.style.cssText='margin:20px;padding:16px;border:1px solid #f0c24a;border-radius:12px;'
+    +'background:rgba(240,194,74,.1);color:#ffd84d;font-family:monospace;font-size:13px';
+  box.textContent='Render error: '+(err&&err.message?err.message:err);
+  document.body.appendChild(box);
+}
+</script>
+</body>
+</html>
