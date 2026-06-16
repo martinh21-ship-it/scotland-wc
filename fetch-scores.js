@@ -25,11 +25,32 @@ const NAME2CODE = {
   "England":"ENG","Croatia":"CRO","Panama":"PAN","Ghana":"GHA"
 };
 
-function get(url){
+function get(url, redirects){
+  redirects = redirects || 0;
   return new Promise((resolve,reject)=>{
-    https.get(url,{headers:{"User-Agent":"scotland-tracker-bot"}},res=>{
+    const opts = {
+      headers: {
+        // Look like a real browser — a bot user-agent is the likely cause of blocks
+        "User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36",
+        "Accept":"application/json, text/plain, */*",
+        "Accept-Language":"en-GB,en;q=0.9"
+      }
+    };
+    const req = https.get(url, opts, res=>{
+      // follow redirects (301/302/307/308)
+      if([301,302,307,308].includes(res.statusCode) && res.headers.location && redirects<5){
+        res.resume();
+        return resolve(get(res.headers.location, redirects+1));
+      }
+      if(res.statusCode !== 200){
+        let body=""; res.on("data",c=>body+=c);
+        res.on("end",()=>reject(new Error("HTTP "+res.statusCode+" from feed. First 200 chars: "+body.slice(0,200))));
+        return;
+      }
       let d=""; res.on("data",c=>d+=c); res.on("end",()=>resolve(d));
-    }).on("error",reject);
+    });
+    req.on("error",reject);
+    req.setTimeout(20000, ()=>{ req.destroy(new Error("Request timed out after 20s")); });
   });
 }
 
@@ -42,10 +63,22 @@ function code(name){
 }
 
 (async ()=>{
-  const raw = await get(SRC);
+  let raw;
+  try{
+    raw = await get(SRC);
+  }catch(e){
+    console.error("FETCH FAILED:", e.message);
+    console.error("The data source may be blocking automated requests, or be temporarily down.");
+    process.exit(1);
+  }
+
   let data;
   try{ data = JSON.parse(raw); }
-  catch(e){ console.error("Could not parse feed JSON"); process.exit(1); }
+  catch(e){
+    console.error("Could not parse feed as JSON. First 300 chars of what came back:");
+    console.error(String(raw).slice(0,300));
+    process.exit(1);
+  }
 
   // feed may return an array, or {games:[...]} / {data:[...]} — handle all
   const games = Array.isArray(data) ? data
