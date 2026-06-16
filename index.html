@@ -630,7 +630,7 @@ $("#resetBtn").addEventListener('click',()=>{
    - hs/as: integers when known, null otherwise
    Only "finished" matches are locked in; "live"/"scheduled" are simulated.
    ============================================================ */
-const FEED_URL = "";          // <-- set to e.g. "https://your-worker.workers.dev/results"
+const FEED_URL = "results.json";   // same repo as this page -> no CORS issues
 const POLL_SECONDS = 60;      // how often Auto-refresh polls
 
 let pollTimer=null;
@@ -668,7 +668,7 @@ async function sync(auto){
   if(!FEED_URL){ setFeed("err","Live feed not configured - set FEED_URL in the file to your API endpoint."); return; }
   setFeed("","Fetching live results...");
   try{
-    const res=await fetch(FEED_URL,{cache:"no-store"});
+    const res=await fetch(FEED_URL+"?t="+Date.now(),{cache:"no-store"});
     if(!res.ok) throw new Error("HTTP "+res.status);
     const data=await res.json();
     const r=applyFeed(data);
