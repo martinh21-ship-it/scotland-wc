@@ -1,0 +1,30 @@
+name: Update World Cup scores
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"   # every 5 minutes
+  workflow_dispatch:          # lets you run it manually from the Actions tab
+
+permissions:
+  contents: write             # allow the action to commit results.json
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Fetch and reshape scores
+        run: node fetch-scores.js
+
+      - name: Commit results.json if changed
+        run: |
+          git config user.name "scores-bot"
+          git config user.email "scores-bot@users.noreply.github.com"
+          if ! git diff --quiet results.json 2>/dev/null; then
+            git add results.json
+            git commit -m "Update scores"
+            git push
+          else
+            echo "No score changes."
