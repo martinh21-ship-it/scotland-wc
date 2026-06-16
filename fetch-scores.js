@@ -8,6 +8,17 @@ const https = require("https");
 
 const SRC = "https://worldcup26.ir/get/games";
 
+// GitHub's servers may be geo-blocked from reaching the Iranian-hosted feed
+// directly (TLS socket disconnects). So we try the direct URL first, then fall
+// back through public proxies that fetch server-side from a non-blocked region.
+// Whichever returns valid JSON first wins.
+const SOURCES = [
+  { name:"direct",    url: SRC, unwrap: r=>r },
+  { name:"codetabs",  url: "https://api.codetabs.com/v1/proxy/?quest="+encodeURIComponent(SRC), unwrap: r=>r },
+  { name:"allorigins",url: "https://api.allorigins.win/raw?url="+encodeURIComponent(SRC), unwrap: r=>r },
+  { name:"corsproxy", url: "https://corsproxy.io/?url="+encodeURIComponent(SRC), unwrap: r=>r }
+];
+
 // English name (as the feed spells it) -> tracker 3-letter code.
 // Includes a few likely alternate spellings the feed might use.
 const NAME2CODE = {
@@ -63,19 +74,34 @@ function code(name){
 }
 
 (async ()=>{
-  let raw;
-  try{
-    raw = await get(SRC);
-  }catch(e){
-    console.error("FETCH FAILED:", e.message);
-    console.error("The data source may be blocking automated requests, or be temporarily down.");
+  let raw=null, usedSource=null;
+  for(const s of SOURCES){
+    try{
+      console.log("Trying source: "+s.name+" ...");
+      const body = await get(s.url);
+      const text = s.unwrap(body);
+      // quick sanity check: must look like our games JSON
+      if(text && text.indexOf('"games"')!==-1 || (text && text.trim().startsWith("["))){
+        raw = text; usedSource = s.name;
+        console.log("  -> success via "+s.name);
+        break;
+      }
+      console.log("  -> "+s.name+" returned unexpected content, trying next.");
+    }catch(e){
+      console.log("  -> "+s.name+" failed: "+e.message);
+    }
+  }
+
+  if(!raw){
+    console.error("ALL SOURCES FAILED. The feed could not be reached from GitHub's servers,");
+    console.error("directly or via any proxy. results.json was left unchanged.");
     process.exit(1);
   }
 
   let data;
   try{ data = JSON.parse(raw); }
   catch(e){
-    console.error("Could not parse feed as JSON. First 300 chars of what came back:");
+    console.error("Fetched via "+usedSource+" but could not parse as JSON. First 300 chars:");
     console.error(String(raw).slice(0,300));
     process.exit(1);
   }
