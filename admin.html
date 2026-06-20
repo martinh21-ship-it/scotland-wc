@@ -171,7 +171,9 @@ function ghBase(){
 }
 async function ghLoad(){
   const tok=$("#token").value.trim();
-  const res=await fetch(ghBase()+"?ref=main",{headers:{Authorization:"token "+tok,Accept:"application/vnd.github+json"}});
+  // cache-bust + no-store so we always get the CURRENT sha, never a cached one
+  const res=await fetch(ghBase()+"?ref=main&t="+Date.now(),
+    {cache:"no-store",headers:{Authorization:"token "+tok,Accept:"application/vnd.github+json"}});
   if(res.status===404) return {sha:null,json:null};
   if(!res.ok) throw new Error("Load failed: HTTP "+res.status+(res.status===401?" (bad token)":res.status===404?" (check repo name)":""));
   const data=await res.json();
@@ -180,11 +182,19 @@ async function ghLoad(){
 }
 async function ghSave(jsonText, sha){
   const tok=$("#token").value.trim();
-  const body={ message:"Update scores", content:btoa(unescape(encodeURIComponent(jsonText))), branch:"main" };
-  if(sha) body.sha=sha;
-  const res=await fetch(ghBase(),{method:"PUT",
-    headers:{Authorization:"token "+tok,Accept:"application/vnd.github+json","Content-Type":"application/json"},
-    body:JSON.stringify(body)});
+  function attempt(useSha){
+    const body={ message:"Update scores", content:btoa(unescape(encodeURIComponent(jsonText))), branch:"main" };
+    if(useSha) body.sha=useSha;
+    return fetch(ghBase(),{method:"PUT",
+      headers:{Authorization:"token "+tok,Accept:"application/vnd.github+json","Content-Type":"application/json"},
+      body:JSON.stringify(body)});
+  }
+  let res=await attempt(sha);
+  // 409 = sha conflict: re-fetch the true current sha and retry once
+  if(res.status===409){
+    const fresh=await ghLoad();
+    res=await attempt(fresh.sha);
+  }
   if(!res.ok){ const t=await res.text(); throw new Error("Save failed: HTTP "+res.status+" "+t.slice(0,120)); }
   return res.json();
 }
