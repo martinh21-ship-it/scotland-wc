@@ -14,74 +14,90 @@
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{background:var(--navy-deep);min-height:100%}
-  body{
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
-    background:var(--navy-deep);color:#eaf0f8;line-height:1.5;
-    padding:18px 14px 90px;max-width:680px;margin:0 auto;
-  }
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    background:var(--navy-deep);color:#eaf0f8;line-height:1.5;padding:18px 14px 110px;max-width:680px;margin:0 auto}
   h1{font-size:22px;font-weight:700;margin-bottom:4px}
   h1 span{color:var(--gold-soft)}
-  .sub{color:#9fb0d6;font-size:13px;margin-bottom:18px}
-  .step{background:rgba(245,197,24,.08);border:1px solid rgba(245,197,24,.3);
-    border-radius:10px;padding:11px 13px;font-size:13px;margin-bottom:16px;color:#ffe9a8}
-  .step b{color:var(--gold-soft)}
+  .sub{color:#9fb0d6;font-size:13px;margin-bottom:16px}
+
+  .setup{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:16px}
+  .setup h2{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--gold);margin-bottom:10px;font-family:var(--mono)}
+  .setup label{display:block;font-size:12px;color:#9fb0d6;margin:8px 0 3px}
+  .setup input{width:100%;padding:9px 11px;background:#0a1540;border:1px solid var(--line);border-radius:8px;
+    color:#eaf0f8;font-family:var(--mono);font-size:13px}
+  .setup input:focus{outline:none;border-color:var(--gold)}
+  .setup .row{display:flex;gap:8px}
+  .setup .row > div{flex:1}
+  .save-token{margin-top:10px;display:flex;gap:8px;align-items:center}
+  .save-token button{font-size:12px;padding:7px 12px;border-radius:8px;border:1px solid var(--line);
+    background:rgba(255,255,255,.06);color:#dfe8f5;cursor:pointer}
+  .tokstatus{font-size:12px;font-family:var(--mono)}
+  .tokstatus.ok{color:var(--good)} .tokstatus.no{color:#9fb0d6}
+
   details.g{border:1px solid var(--line);border-radius:12px;margin-bottom:10px;overflow:hidden}
   details.g > summary{list-style:none;cursor:pointer;padding:12px 14px;font-weight:600;
     display:flex;align-items:center;gap:9px;user-select:none;background:rgba(255,255,255,.04)}
   details.g > summary::-webkit-details-marker{display:none}
-  .tag{font-family:var(--mono);font-size:12px;color:var(--gold);border:1px solid var(--line);
-    border-radius:6px;padding:1px 7px}
+  .tag{font-family:var(--mono);font-size:12px;color:var(--gold);border:1px solid var(--line);border-radius:6px;padding:1px 7px}
   .cnt{margin-left:auto;font-family:var(--mono);font-size:11px;color:#9fb0d6}
   .chev{color:#9fb0d6;transition:transform .2s}
   details.g[open] .chev{transform:rotate(90deg)}
   .body{padding:6px 12px 12px}
-  .m{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px;
-    padding:8px 4px;border-top:1px solid rgba(255,255,255,.06)}
+  .m{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px;padding:8px 4px;border-top:1px solid rgba(255,255,255,.06)}
   .m:first-child{border-top:none}
   .h{text-align:right;font-size:14px;font-weight:600}
   .a{text-align:left;font-size:14px;font-weight:600}
   .sc{display:flex;align-items:center;gap:5px}
-  .sc input{width:40px;height:38px;text-align:center;font-family:var(--mono);font-size:17px;
-    font-weight:700;background:#0a1540;border:1.5px solid rgba(245,197,24,.4);border-radius:8px;
-    color:var(--gold-soft);-moz-appearance:textfield}
+  .sc input{width:40px;height:38px;text-align:center;font-family:var(--mono);font-size:17px;font-weight:700;
+    background:#0a1540;border:1.5px solid rgba(245,197,24,.4);border-radius:8px;color:var(--gold-soft);-moz-appearance:textfield}
   .sc input::-webkit-outer-spin-button,.sc input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
   .sc input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(245,197,24,.3)}
   .dash{font-family:var(--mono);color:var(--gold);font-size:13px}
   .stbtns{display:flex;gap:4px;margin-left:6px}
-  .stbtns button{font-size:10px;font-family:var(--mono);padding:3px 6px;border-radius:6px;
-    border:1px solid var(--line);background:rgba(255,255,255,.05);color:#cdd9ea;cursor:pointer}
+  .stbtns button{font-size:10px;font-family:var(--mono);padding:3px 6px;border-radius:6px;border:1px solid var(--line);
+    background:rgba(255,255,255,.05);color:#cdd9ea;cursor:pointer}
   .stbtns button.on{background:var(--good);border-color:var(--good);color:#04230f;font-weight:700}
   .stbtns button.onlive{background:var(--bad);border-color:var(--bad);color:#2a0a04;font-weight:700}
-  .bar{position:fixed;left:0;right:0;bottom:0;background:#0a1540;border-top:1px solid var(--line);
-    padding:12px 14px;display:flex;gap:10px;align-items:center;max-width:680px;margin:0 auto}
-  .bar button{flex:1;font-size:15px;font-weight:700;padding:12px;border-radius:10px;border:none;
-    background:var(--gold);color:#10205a;cursor:pointer}
-  .bar button.sec{flex:0 0 auto;background:rgba(255,255,255,.1);color:#eaf0f8}
-  #out{margin-top:16px}
-  #out textarea{width:100%;height:220px;font-family:var(--mono);font-size:12px;background:#0a1540;
-    color:#bcd8ff;border:1px solid var(--line);border-radius:10px;padding:12px;white-space:pre}
-  .copied{color:var(--good);font-size:13px;font-weight:600;margin-top:6px;min-height:1.2em}
   .flag{font-size:14px}
+
+  .bar{position:fixed;left:0;right:0;bottom:0;background:#0a1540;border-top:1px solid var(--line);
+    padding:12px 14px;max-width:680px;margin:0 auto}
+  .bar .btns{display:flex;gap:10px;align-items:center}
+  .bar button{flex:1;font-size:15px;font-weight:700;padding:13px;border-radius:10px;border:none;background:var(--gold);color:#10205a;cursor:pointer}
+  .bar button:disabled{opacity:.5}
+  .bar button.sec{flex:0 0 auto;background:rgba(255,255,255,.1);color:#eaf0f8}
+  .status{font-size:13px;margin-top:8px;min-height:1.3em;text-align:center;font-family:var(--mono)}
+  .status.ok{color:var(--good)} .status.err{color:var(--bad)} .status.busy{color:var(--gold-soft)}
+  code{background:rgba(255,255,255,.08);padding:1px 5px;border-radius:4px;font-size:12px}
+  a{color:var(--gold-soft)}
 </style>
 </head>
 <body>
   <h1>Score Admin <span>· Scotland Tracker</span></h1>
-  <p class="sub">Enter finished scores, tap <b>Generate</b>, copy the result, and paste it into <code>results.json</code> on GitHub.</p>
+  <p class="sub">Enter scores and tap <b>Save to GitHub</b>. The tracker updates automatically — no copy-paste.</p>
 
-  <div class="step">
-    <b>How to use:</b> 1) Type scores for finished games (leave others blank). 2) For a game in progress, tap <b>LIVE</b> and enter the current score. 3) Tap <b>Generate file</b> at the bottom. 4) Tap <b>Copy</b>. 5) On GitHub, open <b>results.json</b> → edit (pencil) → select all → paste → commit. Friends see the update within a minute.
+  <div class="setup">
+    <h2>GitHub connection</h2>
+    <div class="row">
+      <div><label>Your GitHub username</label><input id="owner" placeholder="e.g. martinh" autocapitalize="off" autocorrect="off"></div>
+      <div><label>Repo name</label><input id="repo" placeholder="scotland-wc" autocapitalize="off" autocorrect="off"></div>
+    </div>
+    <label>Personal access token (stored only on this device)</label>
+    <input id="token" type="password" placeholder="ghp_..." autocapitalize="off" autocorrect="off">
+    <div class="save-token">
+      <button id="saveTok">Remember on this device</button>
+      <span class="tokstatus no" id="tokStatus">Not saved</span>
+    </div>
   </div>
 
   <div id="groups"></div>
 
-  <div id="out" style="display:none">
-    <textarea id="json" readonly></textarea>
-    <div class="copied" id="copied"></div>
-  </div>
-
   <div class="bar">
-    <button class="sec" id="clearBtn">Clear</button>
-    <button id="genBtn">Generate file</button>
+    <div class="btns">
+      <button class="sec" id="reloadBtn">Reload</button>
+      <button id="saveBtn">Save to GitHub</button>
+    </div>
+    <div class="status" id="status"></div>
   </div>
 
 <script>
@@ -100,10 +116,7 @@ const TEAMS = {
   ENG:{n:"England",iso:"@ENG"}, CRO:{n:"Croatia",iso:"HR"}, PAN:{n:"Panama",iso:"PA"}, GHA:{n:"Ghana",iso:"GH"}
 };
 
-// All 72 group fixtures in correct home/away order (from the official feed).
-// [group, home, away]
-const FIXTURES = [
-  // already-played openers pre-filled below via PREFILL
+const ALLFIX = [
   ["A","MEX","RSA"],["A","KOR","CZE"],["A","MEX","KOR"],["A","CZE","RSA"],["A","CZE","MEX"],["A","RSA","KOR"],
   ["B","QAT","SUI"],["B","CAN","BIH"],["B","CAN","QAT"],["B","SUI","BIH"],["B","SUI","CAN"],["B","BIH","QAT"],
   ["C","HAI","SCO"],["C","BRA","MAR"],["C","SCO","MAR"],["C","BRA","HAI"],["C","MAR","HAI"],["C","SCO","BRA"],
@@ -111,43 +124,17 @@ const FIXTURES = [
   ["E","GER","CUR"],["E","CIV","ECU"],["E","GER","CIV"],["E","ECU","CUR"],["E","ECU","GER"],["E","CUR","CIV"],
   ["F","SWE","TUN"],["F","NED","JPN"],["F","NED","SWE"],["F","TUN","JPN"],["F","JPN","SWE"],["F","TUN","NED"],
   ["G","BEL","EGY"],["G","IRN","NZL"],["G","BEL","IRN"],["G","NZL","EGY"],["G","NZL","BEL"],["G","EGY","IRN"],
-  ["H","ESP","CPV"],["H","KSA","URU"],["H","SPA_PLACE","X"], // placeholder removed below
+  ["H","ESP","CPV"],["H","KSA","URU"],["H","ESP","KSA"],["H","URU","CPV"],["H","CPV","KSA"],["H","URU","ESP"],
   ["I","FRA","SEN"],["I","IRQ","NOR"],["I","FRA","IRQ"],["I","NOR","SEN"],["I","SEN","IRQ"],["I","NOR","FRA"],
   ["J","ARG","ALG"],["J","AUT","JOR"],["J","ARG","AUT"],["J","JOR","ALG"],["J","JOR","ARG"],["J","ALG","AUT"],
   ["K","UZB","COL"],["K","POR","COD"],["K","POR","UZB"],["K","COL","COD"],["K","COL","POR"],["K","COD","UZB"],
   ["L","GHA","PAN"],["L","ENG","CRO"],["L","ENG","GHA"],["L","PAN","CRO"],["L","PAN","ENG"],["L","CRO","GHA"]
 ];
-// Fix group H properly (6 games) — replace the placeholder line
-const H_FIX = [
-  ["H","ESP","CPV"],["H","KSA","URU"],["H","SPA","KSA"],["H","URU","CPV"],["H","CPV","KSA"],["H","URU","ESP"]
-];
-// Rebuild a clean fixture list
-const ALLFIX = (function(){
-  const out=[];
-  const seen=new Set();
-  function add(g,h,a){ const k=g+h+a; if(!seen.has(k)){seen.add(k); out.push([g,h,a]);} }
-  // groups A-G, I-L from FIXTURES (skip the broken H placeholder rows)
-  for(const f of FIXTURES){ if(f[0]==="H") continue; if(f[1].length!==3||f[2].length!==3) continue; add(f[0],f[1],f[2]); }
-  // group H corrected (use ESP code, not SPA)
-  add("H","ESP","CPV"); add("H","KSA","URU"); add("H","ESP","KSA"); add("H","URU","CPV"); add("H","CPV","KSA"); add("H","URU","ESP");
-  return out.sort((x,y)=> x[0]<y[0]?-1:x[0]>y[0]?1:0);
-})();
 
-// Pre-filled finished results (the openers already played). key: group|home|away
-const PREFILL = {
-  "A|MEX|RSA":[2,0],"A|KOR|CZE":[2,1],
-  "B|QAT|SUI":[1,1],"B|CAN|BIH":[1,1],
-  "C|HAI|SCO":[0,1],"C|BRA|MAR":[1,1],
-  "D|USA|PAR":[4,1],"D|AUS|TUR":[2,0],
-  "E|GER|CUR":[7,1],"E|CIV|ECU":[1,0],
-  "F|SWE|TUN":[5,1],"F|NED|JPN":[2,2],
-  "G|BEL|EGY":[1,1],"G|IRN|NZL":[2,2],
-  "H|ESP|CPV":[null,null],"H|KSA|URU":[1,1],
-};
-
-const state = {}; // key -> {hs,as,status}
-
+const state = {};
 function key(g,h,a){return g+"|"+h+"|"+a;}
+const $=s=>document.querySelector(s);
+
 function flag(code){
   const iso=TEAMS[code]?TEAMS[code].iso:"";
   if(iso==="@SCO") return '<svg width="18" height="11" viewBox="0 0 20 12" style="vertical-align:-1px"><rect width="20" height="12" fill="#005eb8"/><path d="M0 0 L20 12 M20 0 L0 12" stroke="#fff" stroke-width="2.2"/></svg>';
@@ -156,11 +143,61 @@ function flag(code){
   return "";
 }
 
-// init state from PREFILL
-for(const f of ALLFIX){
-  const k=key(f[0],f[1],f[2]);
-  if(PREFILL[k] && PREFILL[k][0]!==null){
-    state[k]={hs:PREFILL[k][0],as:PREFILL[k][1],status:"finished"};
+function loadCreds(){
+  try{
+    const o=JSON.parse(localStorage.getItem("scoTrackerCreds")||"{}");
+    if(o.owner) $("#owner").value=o.owner;
+    if(o.repo) $("#repo").value=o.repo;
+    if(o.token){ $("#token").value=o.token; setTok(true); }
+  }catch(e){}
+}
+function saveCreds(){
+  try{
+    localStorage.setItem("scoTrackerCreds",JSON.stringify({
+      owner:$("#owner").value.trim(), repo:$("#repo").value.trim(), token:$("#token").value.trim()
+    }));
+    setTok(true);
+  }catch(e){ setTok(false); }
+}
+function setTok(ok){
+  const s=$("#tokStatus");
+  if(ok){ s.textContent="Saved on this device"; s.className="tokstatus ok"; }
+  else { s.textContent="Not saved"; s.className="tokstatus no"; }
+}
+
+function ghBase(){
+  const o=$("#owner").value.trim(), r=$("#repo").value.trim();
+  return "https://api.github.com/repos/"+o+"/"+r+"/contents/results.json";
+}
+async function ghLoad(){
+  const tok=$("#token").value.trim();
+  const res=await fetch(ghBase()+"?ref=main",{headers:{Authorization:"token "+tok,Accept:"application/vnd.github+json"}});
+  if(res.status===404) return {sha:null,json:null};
+  if(!res.ok) throw new Error("Load failed: HTTP "+res.status+(res.status===401?" (bad token)":res.status===404?" (check repo name)":""));
+  const data=await res.json();
+  const content=decodeURIComponent(escape(atob(data.content.replace(/\n/g,""))));
+  return {sha:data.sha, json:JSON.parse(content)};
+}
+async function ghSave(jsonText, sha){
+  const tok=$("#token").value.trim();
+  const body={ message:"Update scores", content:btoa(unescape(encodeURIComponent(jsonText))), branch:"main" };
+  if(sha) body.sha=sha;
+  const res=await fetch(ghBase(),{method:"PUT",
+    headers:{Authorization:"token "+tok,Accept:"application/vnd.github+json","Content-Type":"application/json"},
+    body:JSON.stringify(body)});
+  if(!res.ok){ const t=await res.text(); throw new Error("Save failed: HTTP "+res.status+" "+t.slice(0,120)); }
+  return res.json();
+}
+
+let currentSha=null;
+
+function applyJsonToState(json){
+  for(const k in state) delete state[k];
+  if(json && Array.isArray(json.matches)){
+    for(const m of json.matches){
+      const k=key(m.group,m.home,m.away);
+      state[k]={ hs:(m.hs==null?null:m.hs), as:(m.as==null?null:m.as), status:m.status||"finished" };
+    }
   }
 }
 
@@ -169,15 +206,15 @@ function render(){
   for(const f of ALLFIX){ (groups[f[0]]=groups[f[0]]||[]).push(f); }
   let html="";
   for(const g of Object.keys(groups).sort()){
-    const done=groups[g].filter(f=>state[key(f[0],f[1],f[2])]&&state[key(f[0],f[1],f[2])].status==="finished").length;
-    html+=`<details class="g" ${g==="C"?"open":""}><summary><span class="tag">${g}</span>Group ${g}<span class="cnt">${done}/6 done</span><span class="chev">▸</span></summary><div class="body">`;
+    const done=groups[g].filter(f=>{const s=state[key(f[0],f[1],f[2])];return s&&s.status==="finished";}).length;
+    html+=`<details class="g" ${g==="C"?"open":""}><summary><span class="tag">${g}</span>Group ${g}<span class="cnt">${done}/6 done</span><span class="chev">\u25b8</span></summary><div class="body">`;
     for(const f of groups[g]){
       const k=key(f[0],f[1],f[2]); const st=state[k]||{};
       html+=`<div class="m" data-k="${k}">
         <div class="h">${TEAMS[f[1]].n} ${flag(f[1])}</div>
         <div class="sc">
           <input type="number" min="0" max="30" inputmode="numeric" data-side="hs" value="${st.hs!=null?st.hs:""}">
-          <span class="dash">–</span>
+          <span class="dash">\u2013</span>
           <input type="number" min="0" max="30" inputmode="numeric" data-side="as" value="${st.as!=null?st.as:""}">
           <span class="stbtns">
             <button data-st="finished" class="${st.status==="finished"?"on":""}">FT</button>
@@ -189,7 +226,7 @@ function render(){
     }
     html+=`</div></details>`;
   }
-  document.getElementById("groups").innerHTML=html;
+  $("#groups").innerHTML=html;
   bind();
 }
 
@@ -203,7 +240,6 @@ function bind(){
         state[k]=state[k]||{};
         state[k].hs = hs===""?null:Math.max(0,parseInt(hs)||0);
         state[k].as = as===""?null:Math.max(0,parseInt(as)||0);
-        // auto-mark finished if both filled and no status yet
         if(state[k].hs!=null && state[k].as!=null && !state[k].status) state[k].status="finished";
         if(state[k].hs==null && state[k].as==null) delete state[k];
         refreshButtons(row,k);
@@ -213,7 +249,7 @@ function bind(){
       btn.addEventListener("click",()=>{
         state[k]=state[k]||{};
         const want=btn.dataset.st;
-        state[k].status = (state[k].status===want)? null : want;
+        state[k].status=(state[k].status===want)?null:want;
         refreshButtons(row,k);
       });
     });
@@ -221,51 +257,76 @@ function bind(){
 }
 function refreshButtons(row,k){
   const st=state[k]||{};
-  const ft=row.querySelector('[data-st="finished"]'), lv=row.querySelector('[data-st="live"]');
-  ft.className = st.status==="finished"?"on":"";
-  lv.className = st.status==="live"?"onlive":"";
-  // update the done counter in this group's summary
+  row.querySelector('[data-st="finished"]').className = st.status==="finished"?"on":"";
+  row.querySelector('[data-st="live"]').className = st.status==="live"?"onlive":"";
   const g=k.split("|")[0];
-  const sums=document.querySelectorAll("details.g");
-  sums.forEach(d=>{ if(d.querySelector(".tag").textContent===g){
-    const done=ALLFIX.filter(f=>f[0]===g && state[key(f[0],f[1],f[2])] && state[key(f[0],f[1],f[2])].status==="finished").length;
-    d.querySelector(".cnt").textContent=done+"/6 done";
-  }});
+  document.querySelectorAll("details.g").forEach(d=>{
+    if(d.querySelector(".tag").textContent===g){
+      const done=ALLFIX.filter(f=>f[0]===g && state[key(f[0],f[1],f[2])] && state[key(f[0],f[1],f[2])].status==="finished").length;
+      d.querySelector(".cnt").textContent=done+"/6 done";
+    }
+  });
 }
 
-function generate(){
+function buildJson(){
   const matches=[];
   for(const f of ALLFIX){
     const k=key(f[0],f[1],f[2]); const st=state[k];
-    if(!st || (st.hs==null && st.as==null)) continue;     // skip untouched
-    const status = st.status || "finished";
-    matches.push({
-      group:f[0], home:f[1], away:f[2],
-      hs: st.hs!=null?st.hs:null,
-      as: st.as!=null?st.as:null,
-      status: (st.hs!=null&&st.as!=null)?status:"scheduled"
-    });
+    if(!st || (st.hs==null && st.as==null)) continue;
+    matches.push({group:f[0],home:f[1],away:f[2],
+      hs:st.hs!=null?st.hs:null, as:st.as!=null?st.as:null,
+      status:(st.hs!=null&&st.as!=null)?(st.status||"finished"):"scheduled"});
   }
-  const out={updated:new Date().toISOString(),matches};
-  document.getElementById("json").value=JSON.stringify(out,null,2);
-  document.getElementById("out").style.display="block";
-  // auto-copy
-  const ta=document.getElementById("json");
-  ta.select();
-  try{
-    navigator.clipboard.writeText(ta.value).then(()=>{
-      document.getElementById("copied").textContent="✓ Copied! Now paste into results.json on GitHub.";
-    },()=>{ document.getElementById("copied").textContent="Select the text above and copy it manually."; });
-  }catch(e){ document.getElementById("copied").textContent="Select the text above and copy it manually."; }
-  document.getElementById("out").scrollIntoView({behavior:"smooth"});
+  return JSON.stringify({updated:new Date().toISOString(),matches},null,2);
 }
 
-document.getElementById("genBtn").addEventListener("click",generate);
-document.getElementById("clearBtn").addEventListener("click",()=>{
-  if(confirm("Clear all entered scores?")){ for(const k in state) delete state[k]; render(); document.getElementById("out").style.display="none"; }
-});
+function setStatus(msg,cls){ const s=$("#status"); s.textContent=msg; s.className="status "+(cls||""); }
 
+async function reload(){
+  if(!$("#owner").value.trim()||!$("#repo").value.trim()||!$("#token").value.trim()){
+    setStatus("Enter username, repo and token first.","err"); return;
+  }
+  setStatus("Loading current scores from GitHub...","busy");
+  try{
+    const r=await ghLoad();
+    currentSha=r.sha;
+    applyJsonToState(r.json);
+    render();
+    const n=r.json&&r.json.matches?r.json.matches.length:0;
+    setStatus("Loaded "+n+" saved games. Add more, then Save.","ok");
+  }catch(e){ setStatus(e.message,"err"); }
+}
+
+async function save(){
+  if(!$("#owner").value.trim()||!$("#repo").value.trim()||!$("#token").value.trim()){
+    setStatus("Enter username, repo and token first.","err"); return;
+  }
+  saveCreds();
+  $("#saveBtn").disabled=true;
+  setStatus("Saving to GitHub...","busy");
+  try{
+    let sha=currentSha;
+    try{ const cur=await ghLoad(); sha=cur.sha; }catch(e){}
+    const jsonText=buildJson();
+    await ghSave(jsonText, sha);
+    try{ const after=await ghLoad(); currentSha=after.sha; }catch(e){}
+    const count=JSON.parse(jsonText).matches.length;
+    setStatus("\u2713 Saved "+count+" games. Tracker will update shortly.","ok");
+  }catch(e){ setStatus(e.message,"err"); }
+  $("#saveBtn").disabled=false;
+}
+
+$("#saveTok").addEventListener("click",()=>{ saveCreds(); reload(); });
+$("#saveBtn").addEventListener("click",save);
+$("#reloadBtn").addEventListener("click",reload);
+
+loadCreds();
 render();
+if($("#token").value.trim() && $("#owner").value.trim() && $("#repo").value.trim()){
+  reload();
+} else {
+  setStatus("Enter your GitHub details above to begin.","");
+}
 </script>
 </body>
 </html>
