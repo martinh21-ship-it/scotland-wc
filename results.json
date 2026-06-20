@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-18T12:36:57.483Z",
+  "updated": "2026-06-20T12:05:30.633Z",
   "matches": [
     {
       "group": "A",
@@ -14,6 +14,22 @@
       "home": "KOR",
       "away": "CZE",
       "hs": 2,
+      "as": 1,
+      "status": "finished"
+    },
+    {
+      "group": "A",
+      "home": "MEX",
+      "away": "KOR",
+      "hs": 1,
+      "as": 0,
+      "status": "finished"
+    },
+    {
+      "group": "A",
+      "home": "CZE",
+      "away": "RSA",
+      "hs": 1,
       "as": 1,
       "status": "finished"
     },
@@ -34,6 +50,22 @@
       "status": "finished"
     },
     {
+      "group": "B",
+      "home": "CAN",
+      "away": "QAT",
+      "hs": 6,
+      "as": 0,
+      "status": "finished"
+    },
+    {
+      "group": "B",
+      "home": "SUI",
+      "away": "BIH",
+      "hs": 1,
+      "as": 4,
+      "status": "finished"
+    },
+    {
       "group": "C",
       "home": "HAI",
       "away": "SCO",
@@ -50,6 +82,22 @@
       "status": "finished"
     },
     {
+      "group": "C",
+      "home": "SCO",
+      "away": "MAR",
+      "hs": 0,
+      "as": 1,
+      "status": "finished"
+    },
+    {
+      "group": "C",
+      "home": "BRA",
+      "away": "HAI",
+      "hs": 3,
+      "as": 0,
+      "status": "finished"
+    },
+    {
       "group": "D",
       "home": "USA",
       "away": "PAR",
@@ -63,6 +111,22 @@
       "away": "TUR",
       "hs": 2,
       "as": 0,
+      "status": "finished"
+    },
+    {
+      "group": "D",
+      "home": "USA",
+      "away": "AUS",
+      "hs": 2,
+      "as": 0,
+      "status": "finished"
+    },
+    {
+      "group": "D",
+      "home": "TUR",
+      "away": "PAR",
+      "hs": 0,
+      "as": 1,
       "status": "finished"
     },
     {
@@ -142,7 +206,7 @@
       "home": "IRQ",
       "away": "NOR",
       "hs": 1,
-      "as": 3,
+      "as": 4,
       "status": "finished"
     },
     {
@@ -157,7 +221,7 @@
       "group": "J",
       "home": "AUT",
       "away": "JOR",
-      "hs": 4,
+      "hs": 3,
       "as": 1,
       "status": "finished"
     },
@@ -165,8 +229,8 @@
       "group": "K",
       "home": "UZB",
       "away": "COL",
-      "hs": 1,
-      "as": 3,
+      "hs": 0,
+      "as": 1,
       "status": "finished"
     },
     {
